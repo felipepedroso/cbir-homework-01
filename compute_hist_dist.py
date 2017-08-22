@@ -8,6 +8,9 @@ import numpy as np
 import argparse
 import glob
 import cv2
+import datetime
+
+timeStarted = datetime.datetime.utcnow()
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -82,13 +85,17 @@ fig = plt.figure("Results: %s" % (methodName))
 fig.suptitle(methodName, fontsize = 20)
 
 # loop over the results
-for (i, (v, k)) in enumerate(results[:10]):
-
+for (i, (v, k)) in enumerate(results[:20]):
 	# show the result
-	ax = fig.add_subplot(1, len(images), i + 1)
+	#ax = fig.add_subplot(1, len(images), i + 1)
+	ax = fig.add_subplot(1, 20, i + 1)
 	#ax.set_title("%s: %.2f" % (k, v))
 	plt.imshow(images[k])
 	plt.axis("off")
 
 # show the SciPy methods
+
+timeEnded = datetime.datetime.utcnow()
+print("Finished in: " + str((timeEnded - timeStarted).total_seconds()))
+
 plt.show()
