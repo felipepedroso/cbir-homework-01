@@ -16,6 +16,7 @@ timeStarted = datetime.datetime.utcnow()
 ap = argparse.ArgumentParser()
 ap.add_argument("-d", "--dataset", required = True, help = "Path to the directory of images")
 ap.add_argument("-k", "--keyimage", required = True, help = "Key image filename")
+ap.add_argument("-m", "--method", required = True, help = "Distance computation method")
 args = vars(ap.parse_args())
 
 # initialize the index dictionary to store the image name
@@ -42,24 +43,16 @@ for imagePath in glob.glob(args["dataset"] + "/*.png"):
 	hist = cv2.normalize(hist).flatten()
 	index[filename] = hist
 
-# METHOD #2: UTILIZING SCIPY
+# UTILIZING SCIPY
 # initialize the scipy methods to compute distances
-'''
 SCIPY_METHODS = (
 	("Euclidean", dist.euclidean),
 	("Manhattan", dist.cityblock),
 	("Chebysev", dist.chebyshev))
-'''
-
-# loop over the comparison methods
-#for (methodName, method) in SCIPY_METHODS:
+methodName, method = SCIPY_METHODS[int(args["method"])]
 
 # initialize the dictionary dictionary
 results = {}
-
-methodName = "Manhattan"
-method = dist.cityblock
-
 count = 0
 
 # loop over the index
